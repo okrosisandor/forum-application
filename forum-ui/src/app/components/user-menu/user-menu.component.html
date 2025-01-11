@@ -1,0 +1,42 @@
+<div class="menu">
+    <div (click)="expanded = !expanded" role="button" class="d-flex align-items-center">
+        <h4 class="mb-0">Your Menu</h4>
+        <i class="ms-auto px-3" [ngClass]="expanded ? 'fas fa-chevron-up' : 'fas fa-chevron-down'"></i>
+    </div>
+
+    <div *ngIf="expanded" class="mt-2">
+        <div class="mb-2">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <a [routerLink]="['/create-question']" class="text-decoration-none d-block">
+                        <i class="fas fa-plus-circle me-2"></i> New question
+                    </a>
+                </li>
+                <li class="list-group-item">
+                    <a [routerLink]="['/your-questions']" [queryParams]="{ scenario: 'owner' }" class="text-decoration-none d-block">
+                        <i class="fas fa-list-alt me-2"></i> Your questions
+                    </a>
+                </li>
+                <li class="list-group-item">
+                    <a [routerLink]="['/messages']" class="text-decoration-none d-block" [ngClass]="{'text-danger': unreadMessageCount > 0}">
+                        <i class="fas fa-envelope me-2"></i> Messages <span *ngIf="unreadMessageCount > 0">({{ unreadMessageCount }})</span>
+                    </a>
+                </li>
+                <li class="list-group-item">
+                    <a [routerLink]="['/notifications']" class="text-decoration-none d-block">
+                        <i class="fas fa-envelope me-2"></i> Notifications
+                    </a>
+                </li>
+                <li class="list-group-item">
+                    <a [routerLink]="['/update-user']" class="text-decoration-none d-block">
+                        <i class="fas fa-cog me-2"></i> Settings
+                    </a>
+                </li>
+                <li class="list-group-item">
+                    <a (click)="logout()" class="text-decoration-none d-block" role="button">
+                        <i class="fas fa-sign-out-alt me-2"></i> Logout
+                    </a>
+                </li>
+            </ul>
+    </div>
+</div>

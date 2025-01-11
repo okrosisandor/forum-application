@@ -1,0 +1,168 @@
+<div #scrollableContent class="mt-3 mb-5">
+  <div class="card bg-dark text-white">
+    <div class="card-header text-center h4 py-3 bg-primary">
+      {{ question.title }}
+    </div>
+    <div class="mb-3 card-body rounded description">
+      <div>{{ question.description }}</div>
+    </div>
+    <div class="card-footer text-info d-flex justify-content-between">
+      <div class="footer-text">{{ formattedDate(question.createdDate) }}</div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="answersPage.content.length > 0">
+  <div
+    *ngFor="let answer of answersPage.content; let i = index"
+    class="mt-3 mb-4"
+  >
+    <div class="card bg-dark text-white">
+      <div
+        class="card-header h5 py-3 d-flex justify-content-between"
+        [ngClass]="{
+          'bg-primary': question.userId === answer.userId,
+          'bg-success': question.userId !== answer.userId
+        }"
+      >
+        <div>
+          {{ answer.createdUser }} (<span [ngClass]="getRatingClass(answer)"
+            >{{ answer.userRating }}%</span
+          >):
+        </div>
+        <div *ngIf="!isAdmin && isLoggedIn">
+          <button
+            (click)="reportAnswer(answer)"
+            class="bg-danger rounded border-danger text-dark"
+            style="padding: 0.3rem"
+          >
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            Report answer
+          </button>
+        </div>
+        <div *ngIf="isAdmin && answer.reported">
+          <button
+            (click)="deleteAnswer(answer)"
+            class="bg-danger rounded border-danger text-dark"
+            style="padding: 0.3rem"
+          >
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            Delete answer
+          </button>
+          <button
+            (click)="cancelReportedStatus(answer)"
+            class="bg-warning rounded border-warning text-dark mx-2"
+            style="padding: 0.3rem"
+          >
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            Cancel reported
+          </button>
+        </div>
+
+        <div>
+          {{ currentPage * pageSize + (i + 1) }}/{{ answersPage.totalElements }}
+        </div>
+      </div>
+      <div class="mb-3 card-body rounded description">
+        <div>{{ answer.content }}</div>
+      </div>
+      <div class="card-footer text-info d-flex justify-content-between">
+        <div class="footer-text">{{ formattedDate(answer.createdDate) }}</div>
+        <div class="footer-text d-flex align-items-center">
+          <span
+            class="px-2 d-flex align-items-center"
+            [title]="
+              !isLoggedIn
+                ? 'You need to be logged in to rate'
+                : !canRateAnswer(answer)
+                ? answer.userId === loggedInUserId
+                  ? 'Cannot rate your own answer'
+                  : 'You already rated this answer'
+                : ''
+            "
+          >
+            <i
+              (click)="
+                isLoggedIn &&
+                  canRateAnswer(answer) &&
+                  createRating(answer.answerId, RatingEnum.UPVOTE)
+              "
+              class="fas fa-thumbs-up me-1 rate-icon"
+              [class.disabled]="!isLoggedIn || !canRateAnswer(answer)"
+            ></i>
+            {{ answer.upvoteNumber }}
+          </span>
+          <span
+            class="d-flex align-items-center"
+            [title]="
+              !isLoggedIn
+                ? 'You need to be logged in to rate'
+                : !canRateAnswer(answer)
+                ? answer.userId === loggedInUserId
+                  ? 'Cannot rate your own answer'
+                  : 'You already rated this answer'
+                : ''
+            "
+          >
+            <i
+              (click)="
+                isLoggedIn &&
+                  canRateAnswer(answer) &&
+                  createRating(answer.answerId, RatingEnum.DOWNVOTE)
+              "
+              class="fas fa-thumbs-down rate-icon me-1"
+              [class.disabled]="!isLoggedIn || !canRateAnswer(answer)"
+            ></i>
+            {{ answer.downvoteNumber }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-container *ngIf="answersPage.totalPages > 1">
+    <app-pagination
+      [currentPage]="currentPage"
+      [totalPages]="answersPage.totalPages"
+      [maxDisplayedPages]="5"
+      (pageChanged)="onPageChanged($event)"
+    ></app-pagination>
+  </ng-container>
+</div>
+
+<div *ngIf="answersPage.content.length === 0">
+  <p class="text-white text-center h4 mb-5">No answers yet.</p>
+</div>
+
+<div class="alert alert-danger" role="alert" *ngIf="errorMsg.length">
+  <p *ngFor="let msg of errorMsg">{{ msg }}</p>
+</div>
+
+<div *ngIf="isLoggedIn" class="mb-5">
+  <ng-container>
+    <label
+      for="description"
+      class="form-label text-white text-center d-block text-center h5"
+      >Post your answer here</label
+    >
+    <textarea
+      [(ngModel)]="answer.content"
+      id="description"
+      class="form-control"
+      placeholder="Answer"
+      rows="4"
+    ></textarea>
+  </ng-container>
+
+  <div class="d-flex justify-content-between mt-2 mb-3">
+    <button
+      (click)="createAnswer()"
+      type="button"
+      class="btn btn-primary d-block w-100"
+    >
+      <span class="h5"
+        ><i class="fas fa-plus-circle me-1"></i> Post Answer</span
+      >
+    </button>
+  </div>
+</div>

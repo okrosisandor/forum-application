@@ -1,0 +1,39 @@
+<div class="d-flex justify-content-center mt-4">
+    <nav aria-label="Pagination navigation">
+      <ul class="pagination pagination-lg">
+        <li class="page-item" [class.disabled]="currentPage === 0">
+          <button class="page-link" (click)="goToFirstPage()" aria-label="First">
+            <i class="fa-solid fa-angles-left"></i>
+          </button>
+        </li>
+        <li class="page-item" [class.disabled]="currentPage === 0">
+          <button class="page-link" (click)="goToPreviousPage()" aria-label="Previous">
+            <i class="fa-solid fa-angle-left"></i>
+          </button>
+        </li>
+  
+        <li
+          *ngFor="let pageIndex of displayedPages"
+          class="page-item"
+          [class.active]="currentPage === pageIndex"
+        >
+          <button class="page-link" (click)="goToPage(pageIndex)">
+            {{ pageIndex + 1 }}
+          </button>
+        </li>
+  
+        <li class="page-item" [class.disabled]="currentPage === totalPages - 1">
+          <button class="page-link" (click)="goToNextPage()" aria-label="Next">
+            <i class="fa-solid fa-angle-right"></i>
+          </button>
+        </li>
+  
+        <li class="page-item" [class.disabled]="currentPage === totalPages - 1">
+          <button class="page-link" (click)="goToLastPage()" aria-label="Last">
+            <i class="fa-solid fa-angles-right"></i>
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  

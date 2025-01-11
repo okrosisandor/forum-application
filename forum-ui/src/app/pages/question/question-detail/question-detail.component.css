@@ -1,0 +1,20 @@
+.description {
+  font-size: 1rem;
+}
+
+.rate-icon {
+  cursor: pointer;
+}
+
+.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.text-yellow {
+    color: #ffc107;
+}
+
+.text-green{
+    color: #28a745;
+}
