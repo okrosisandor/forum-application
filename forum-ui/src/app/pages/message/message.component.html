@@ -1,0 +1,118 @@
+<div class="mt-3 mb-3 w-100 m-auto">
+  <div #scrollableContent class="message-selector d-flex flex-row justify-content-between align-items-center bg-dark">
+    <div 
+      class="message-selector-item text-center w-100 p-2" 
+      [ngClass]="{'active bg-primary': activeTab === 'incoming'}"
+      (click)="switchTab('incoming')">
+      Incoming messages
+    </div>
+    <div 
+      class="message-selector-item text-center w-100 p-2" 
+      [ngClass]="{'active bg-primary': activeTab === 'outgoing'}"
+      (click)="switchTab('outgoing')">
+      Your messages
+    </div>
+    <div 
+      class="message-selector-item text-center w-100 p-2" 
+      [ngClass]="{'active bg-primary': activeTab === 'new'}"
+      (click)="switchTab('new')">
+      New message
+    </div>
+  </div>
+</div>
+
+<!-- Incoming messages -->
+<div *ngIf="activeTab === 'incoming'">
+  <h4 class="mb-3 h2 text-center">Incoming messages</h4>
+  <div *ngFor="let message of incomingMessagesPage.content; let i = index" class="mt-3 mb-4">
+    <div class="card bg-dark text-white">
+      <div class="mb-3 card-body rounded description">
+        <div class="mb-3">
+          From: 
+          <span 
+            [ngClass]="message.createdByAdmin ? 'text-danger' : 'text-primary'">
+            {{ message.from }}
+          </span>
+        </div>
+        <div>{{ message.message }}</div>
+      </div>
+      <div class="card-footer text-info d-flex justify-content-between">
+        <div class="footer-text">{{ formattedDate(message.createdDate) }}</div>
+        <div class="d-flex justify-content-between">
+          <div *ngIf="message.globalMessage" class="footer-text me-3 bg-warning text-dark px-2 rounded">Global Message</div>
+          <div *ngIf="message.createdByAdmin" class="footer-text bg-danger text-white px-2 rounded">Admin</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-container *ngIf="incomingMessagesPage.totalPages > 1">
+    <app-pagination
+      [currentPage]="currentIncomingPage"
+      [totalPages]="incomingMessagesPage.totalPages"
+      [maxDisplayedPages]="5"
+      (pageChanged)="onPageChanged($event)">
+    </app-pagination>
+  </ng-container>
+</div>
+
+<!-- Outgoing messages -->
+<div *ngIf="activeTab === 'outgoing'">
+  <h4 class="mb-3 h2 text-center">Your messages</h4>
+  <div *ngFor="let message of outgoingMessagesPage.content; let i = index" class="mt-3 mb-4">
+    <div class="card bg-dark text-white">
+      <div class="mb-3 card-body rounded description">
+        <div class="mb-3">To: <span class="text-primary">{{ message.to }}</span></div>
+        <div>{{ message.message }}</div>
+      </div>
+      <div class="card-footer text-info d-flex justify-content-between">
+        <div class="footer-text">{{ formattedDate(message.createdDate) }}</div>
+        <div class="d-flex justify-content-between">
+          <div *ngIf="message.globalMessage" class="footer-text me-3 bg-warning text-dark px-2 rounded">Global Message</div>
+          <div *ngIf="message.createdByAdmin" class="footer-text bg-danger text-white px-2 rounded">Admin</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-container *ngIf="outgoingMessagesPage.totalPages > 1">
+    <app-pagination
+      [currentPage]="currentOutgoingPage"
+      [totalPages]="outgoingMessagesPage.totalPages"
+      [maxDisplayedPages]="5"
+      (pageChanged)="onPageChanged($event)">
+    </app-pagination>
+  </ng-container>
+</div>
+
+<!-- New message -->
+<div *ngIf="activeTab === 'new'" class="container-fluid card bg-transparent mt-3 mb-5 border-none">
+  <h3 class="text-center text-white mt-3">New Message</h3>
+  <hr />
+  <div class="alert alert-danger" role="alert" *ngIf="errorMsg.length">
+    <p *ngFor="let msg of errorMsg">{{ msg }}</p>
+  </div>
+  <div *ngIf="isAdmin" class="mb-3">
+    <label for="sendType" class="form-label text-white">Send Type</label>
+    <select id="sendType" [(ngModel)]="sendType" class="form-select">
+      <option *ngFor="let type of sendTypes" [value]="type.value">
+        {{ type.label }}
+      </option>
+    </select>
+    
+  </div>
+  <div *ngIf="sendType != 'TO_ALL'" class="mb-3">
+    <label for="username" class="form-label text-white">Username</label>
+    <input [(ngModel)]="message.receiverUserName" type="text" name="" id="username" class="form-control" placeholder="Username">
+  </div>
+  <div class="mb-3">
+    <label for="message" class="form-label text-white">Message</label>
+    <textarea *ngIf="sendType != 'TO_ALL'" [(ngModel)]="message.message" id="message" class="form-control" placeholder="Message" rows="4"></textarea>
+    <textarea *ngIf="sendType == 'TO_ALL'" [(ngModel)]="globalMessage.message" id="message" class="form-control" placeholder="Message" rows="4"></textarea>
+  </div>
+  <div class="d-flex justify-content-between mt-2 mb-3">
+    <button (click)="createMessage()" type="button" class="btn btn-primary d-block w-100">
+      <span class="h5"><i class="fas fa-plus-circle me-1"></i> Send</span>
+    </button>
+  </div>
+</div>

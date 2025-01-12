@@ -1,0 +1,30 @@
+i {
+  font-size: 1.6rem;
+  padding-right: 0.5rem;
+}
+
+.tags span:first-child {
+  margin-left: 0 !important;
+}
+
+.details {
+  font-size: 1.1rem;
+}
+
+.search-bar-container {
+  max-width: 400px;
+  background-color: #f7f7f7;
+  overflow: hidden;
+}
+
+#search-icon {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.disabled-icon {
+  cursor: not-allowed;
+  opacity: 0.6;
+}

@@ -1,0 +1,59 @@
+<div #scrollableContent class="mb-5">
+  <h4 class="mt-2 mb-3 h2 text-center">Questions</h4>
+
+  <div class="input-group mb-3 mx-auto search-bar-container border rounded">
+    <input
+      type="text"
+      [(ngModel)]="searchText"
+      class="form-control border-0"
+      placeholder="Search..."
+      (keyup.enter)="submitSearch()"
+    />
+    <span
+      (click)="submitSearch()"
+      class="input-group-text border-0 bg-primary"
+      [ngClass]="{'disabled-icon': !searchText || searchText.trim() === ''}"
+      id="search-icon"
+    >
+      <i class="fas fa-search" [ngClass]="{ 'text-white': searchText, 'text-muted': !searchText }"></i>
+    </span>
+  </div>
+
+  <div #scrollableContent *ngFor="let question of questionsPage.content" class="mb-3">
+    <a [routerLink]="['/question', question.questionId, 'details']" class="text-decoration-none">
+      <div class="bg-dark px-4 d-flex align-items-center rounded justify-content-between p-2">
+        
+        <div class="d-flex flex-column">
+          <div class="details">
+            <div class="text-white">{{ question.title }}</div>
+            <div class="text-primary">
+              {{ question.mainCategory | titlecase }} -> {{ question.subCategory | titlecase }}
+            </div>
+            <div>Latest activity: 
+              <span class="text-white">
+                  {{ question.latestAnswerDate ? formattedDate(question.latestAnswerDate) : 'No answers yet.' }}
+              </span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="d-flex flex-column align-items-end">
+          <div class="details">
+            <div class="text-white"><span class="text-primary">Created: </span>{{ formattedDate(question.createdDate) }}</div>
+            <div class="text-white"><span class="text-primary">Answers: </span>{{ question.totalAnswers }}</div>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+
+  <ng-container *ngIf="questionsPage.totalPages > 1">
+    <app-pagination
+    [currentPage]="currentPage"
+    [totalPages]="questionsPage.totalPages"
+    [maxDisplayedPages]="5"
+    (pageChanged)="onPageChanged($event)"
+    ></app-pagination>
+  </ng-container>
+  
+</div>
