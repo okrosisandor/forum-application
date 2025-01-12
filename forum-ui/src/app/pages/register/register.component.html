@@ -1,0 +1,30 @@
+<div class="container-fluid card bg-transparent mt-3 mb-5 border-none">
+    <h3 class="text-center text-white mt-3">Create an account</h3>
+    <hr />
+    <div class="alert alert-danger" role="alert" *ngIf="errorMsg.length">
+      <p *ngFor="let msg of errorMsg">{{ msg }}</p>
+    </div>
+    <div class="mb-3">
+      <label for="username" class="form-label text-white">Username</label>
+      <input [(ngModel)]="registerRequest.displayName" type="text" name="" id="username" class="form-control" placeholder="John">
+    </div>
+    <div class="mb-3">
+      <label for="email" class="form-label text-white">Email address</label>
+      <input [(ngModel)]="registerRequest.email" type="email" name="" id="email" class="form-control" placeholder="name@example.com">
+    </div>
+    <div class="mb-3">
+      <label for="dateOfBirth" class="form-label text-white">Birth date</label>
+      <input [(ngModel)]="registerRequest.dateOfBirth" type="date" name="" id="dateOfBirth" class="form-control" placeholder="Doe">
+    </div>
+  <div class="mb-3">
+      <label for="password" class="form-label text-white">Password</label>
+      <input [(ngModel)]="registerRequest.password" type="password" name="" id="password" class="form-control" placeholder="Password">
+  </div>
+
+  <div class="d-flex justify-content-between mt-2 mb-3">
+    <button (click)="register()" type="button" class="btn btn-primary d-block w-100">
+        <span class="h5"><i class="fas fa-user-plus me-1"></i> Create account</span>
+    </button>
+  </div>
+</div>
+  

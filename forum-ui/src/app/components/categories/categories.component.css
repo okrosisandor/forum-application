@@ -1,0 +1,9 @@
+.d-flex {
+    cursor: pointer;
+    padding: 5px 0;
+}
+
+.d-flex:hover {
+    background-color: #495057;
+    border-radius: 3px;
+}
