@@ -1,0 +1,24 @@
+<div class="menu">
+    <div (click)="expanded = !expanded" role="button" class="d-flex align-items-center">
+        <h4 class="mb-0">Authorize</h4>
+        <i class="ms-auto px-3" [ngClass]="expanded ? 'fas fa-chevron-up' : 'fas fa-chevron-down'"></i>
+    </div>
+
+    <div *ngIf="expanded" class="mt-2">
+        <ul class="list-group">
+            <li class="list-group-item">
+                <a [routerLink]="['/login']" class="text-decoration-none d-block">
+                    <i class="fas fa-sign-in-alt me-2"></i> Login
+                </a>
+            </li>
+            <li class="list-group-item">
+                <a [routerLink]="['/register']" class="text-decoration-none d-block">
+                    <i class="fas fa-user-plus me-2"></i> Register
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <hr />
+</div>
+  

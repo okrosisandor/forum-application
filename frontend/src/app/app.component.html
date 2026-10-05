@@ -1,0 +1,24 @@
+<div class="sidebar">
+
+  <ng-container *ngIf="isLoggedIn; else authOptions">
+    <p class="fw-bold" style="font-size: 1.1rem;">Logged in as: <span class="text-primary"> {{ getUsername() }} </span></p>
+    <hr />
+    <div *ngIf="isAdmin">
+      <app-admin-menu></app-admin-menu>
+      <hr />
+    </div>
+    <app-user-menu></app-user-menu>
+    <hr />
+  </ng-container>
+
+  <ng-template #authOptions>
+    <app-auth-options></app-auth-options>
+  </ng-template>
+  
+  <app-categories></app-categories>
+</div>
+
+<div class="content">
+  <router-outlet></router-outlet>
+</div>
+

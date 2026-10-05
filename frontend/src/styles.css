@@ -1,0 +1,82 @@
+/* You can add global styles to this file, and also import other style files */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: black;
+}
+
+.sidebar,
+.content {
+  height: 100vh;
+  overflow: auto;
+  color: #d1d5da;
+  position: fixed;
+}
+
+.sidebar {
+  width: 20%;
+  left: 0;
+  top: 0;
+  background-color: #23272b;
+  padding: 15px;
+}
+
+.content {
+  left: 20%;
+  right: 0;
+  background-color: #343a40;
+  padding: 0 3rem;
+}
+
+.list-group-item,
+.menu {
+  background-color: transparent;
+  color: #b0b3b8;
+  border: none;
+}
+
+.list-group-item:hover {
+  background-color: #495057;
+  cursor: pointer;
+}
+
+.list-group-item a,
+.menu a {
+  color: #d1d5da;
+}
+
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 25%;
+  }
+
+  .content {
+    left: 25%;
+    max-width: 75%;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 30%;
+  }
+
+  .content {
+    left: 30%;
+  }
+}
+
+@media (max-width: 650px) {
+  .sidebar {
+    width: 35%;
+  }
+
+  .content {
+    left: 35%;
+    padding: 0 2rem;
+  }
+}

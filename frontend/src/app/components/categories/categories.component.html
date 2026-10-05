@@ -1,0 +1,30 @@
+<div class="menu">
+    <div (click)="menuExpanded = !menuExpanded" role="button" class="d-flex align-items-center">
+      <h4 class="mb-0">Categories</h4>
+      <i class="ms-auto px-3" [ngClass]="menuExpanded ? 'fas fa-chevron-up' : 'fas fa-chevron-down'"></i>
+    </div>
+    <div *ngIf="menuExpanded" class="wrapper p-2">
+      <div *ngFor="let category of categories" class="mb-2">
+        <div class="d-flex align-items-center px-2" (click)="toggleCategory(category.mainCategory)">
+          <span>{{ category.mainCategory | replaceUnderscore | titlecase }}</span>
+          <span class="ms-auto">
+            <i [ngClass]="category.expanded ? 'fas fa-chevron-up' : 'fas fa-chevron-down'"></i>
+          </span>
+        </div>
+        <div *ngIf="category.expanded" class="mt-2">
+          <ul class="list-group">
+            <li class="list-group-item" *ngFor="let subcategory of category.subcategories">
+              <a
+                [routerLink]="['/questions', category.mainCategory, subcategory]"
+                [queryParams]="{ scenario: 'category' }"
+                class="text-decoration-none d-block"
+              >
+                {{ subcategory | replaceUnderscore | titlecase }}
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  

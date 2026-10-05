@@ -1,0 +1,56 @@
+# === Java / Spring Boot (Backend) ===
+target/
+build/
+.gradle/
+*.class
+*.jar
+*.war
+HELP.md
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+# === Angular / Node (Frontend) ===
+node_modules/
+/.angular/cache
+/dist
+/tmp
+/out-tsc
+/bazel-out
+.sass-cache/
+/connect.lock
+/coverage
+/libpeerconnection.log
+testem.log
+/typings
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.env
+
+# === Eclipse / STS workspace ===
+.metadata/
+
+# === IDEs & Editors ===
+.idea/
+*.iws
+*.iml
+*.ipr
+.vscode/
+.classpath
+.project
+.settings/
+.factorypath
+.springBeans
+.sts4-cache/
+/nbproject/
+/nbbuild/
+/nbdist/
+/.nb-gradle/
+*.sublime-workspace
+
+# === Operating System ===
+.DS_Store
+Thumbs.db

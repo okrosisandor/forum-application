@@ -1,0 +1,5 @@
+@media (max-width: 768px) {
+  .responsive-pagination .page-link {
+    padding: 0.5rem 1rem;
+  }
+}

@@ -1,0 +1,8 @@
+.message-selector .message-selector-item{
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.message-selector .message-selector-item:hover{
+    background-color: #495057;
+}
